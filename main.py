@@ -137,6 +137,9 @@ async def obtenerFactura(id: int) -> Factura:
 
     data = respuesta.fetchone()
 
+    if not data:
+         raise HTTPException(status_code=404, detail="factura no encontrada")
+
     return(dict(data))
 
 @app.get("/personas/{id}")
@@ -243,7 +246,7 @@ async def agregarAlumnos(alumnos: AlumnosCreate):
 
     conexion.commit()
     conexion.close()
-    return {"mensaje": "Alumno agregada correctamente"}
+    return {"mensaje": "Alumno agregado correctamente"}
 
 #PUT
 @app.put("/personas/{id}")
@@ -269,6 +272,8 @@ async def actualizarAlumno(id: int, alumno: AlumnoUpdate):
 
     conexion.commit()
     conexion.close()
+
+    return {"mensaje": "Actualizado correctamente"}
 
 # @app.get("/facturas")
 # async def VerificarFactura(id: int) -> Factura:
